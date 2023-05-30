@@ -7,10 +7,10 @@ variable "name" {
 variable "vpc_id" {}
 variable "allow_db_cidr" {}
 variable "engine_version" {}
-variable engine {}
+# variable engine {}
 variable "kms_arn" {}
 variable "port_number" {
   default = 3306
 }
-# variable "instance_count" {}
+variable "instance_count" {}
 variable "instance_class" {}

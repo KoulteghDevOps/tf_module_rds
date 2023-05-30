@@ -34,7 +34,7 @@ resource "aws_db_parameter_group" "main" {
   name        = "${var.name}-${var.env}-pg"
 }
 
-resource "aws_rds_cluster" "default" {
+resource "aws_rds_cluster" "main" {
   cluster_identifier      = "${var.name}-${var.env}-rds"
   engine                  = "aurora-mysql"
   engine_version          = var.engine_version
