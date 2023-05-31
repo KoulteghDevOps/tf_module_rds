@@ -14,3 +14,4 @@ variable "port_number" {
 }
 variable "instance_count" {}
 variable "instance_class" {}
+
