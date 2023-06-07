@@ -26,7 +26,7 @@ resource "aws_db_subnet_group" "main" {
   name       = "${var.name}-${var.env}-sg"
   subnet_ids = var.subnets #[aws_subnet.frontend.id, aws_subnet.backend.id]
 
-  tags = merge(var.tags, { Name = "${var.name}-${var.env}-sg" })
+  tags       = merge(var.tags, { Name = "${var.name}-${var.env}-sg" })
 }
 
 resource "aws_db_parameter_group" "main" {
@@ -44,22 +44,22 @@ resource "aws_rds_cluster" "main" {
   master_password         = data.aws_ssm_parameter.db_pass.value
   backup_retention_period = 5
   preferred_backup_window = "07:00-09:00"
-  vpc_security_group_ids          = [aws_security_group.main.id]
-  db_subnet_group_name            = aws_db_subnet_group.main.name
-  skip_final_snapshot = true
-  storage_encrypted = true
-  kms_key_id = var.kms_arn
-  tags        = merge(var.tags, { Name = "${var.name}-${var.env}-rdsc" })
+  vpc_security_group_ids  = [aws_security_group.main.id]
+  db_subnet_group_name    = aws_db_subnet_group.main.name
+  skip_final_snapshot     = true
+  storage_encrypted       = true
+  kms_key_id              = var.kms_arn
+  tags                    = merge(var.tags, { Name = "${var.name}-${var.env}-rdsc" })
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
   count              = var.instance_count
-  identifier         = "aurora-cluster-main-${count.index}"
+  identifier         = "aurora-cluster-demo-${count.index}"
   cluster_identifier = aws_rds_cluster.main.id
   instance_class     = var.instance_class
   engine             = aws_rds_cluster.main.engine
   engine_version     = aws_rds_cluster.main.engine_version
-  tags        = merge(var.tags, { Name = "${var.name}-${var.env}-rds-${count.index+1}" })
+  tags               = merge(var.tags, { Name = "${var.name}-${var.env}-rds-${count.index+1}" })
 }
 
 # resource "aws_docdb_cluster" "main" {
